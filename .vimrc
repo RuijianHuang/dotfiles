@@ -11,6 +11,7 @@ set shiftwidth=4
 set smartindent
 set autoindent
 " set foldmethod=syntax
+set foldcolumn=0
 
 set showmatch
 set incsearch
@@ -53,6 +54,7 @@ Plugin 'vim-airline/vim-airline'                        " status line & other ch
 Plugin 'vim-airline/vim-airline-themes'                 " exotic themes
 Plugin 'nanotech/jellybeans.vim'                        " beautiful vim theme
 " Plugin 'Gruvbox-community/gruvbox'                      " gruvbox
+" Plugin 'flazz/vim-colorschemes'                         " one that hasn't been used
 Plugin 'shmup/vim-sql-syntax'                           " sql syntax highlight
 
 " Utilitarian
@@ -79,14 +81,11 @@ filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 
-
-let vim_markdown_preview_github=1
-let b:vcm_tab_complete=1
-
 colorscheme jellybeans
 set background=dark
-let g:jellybeans_overrides = {'background': { 'guibg': '121212' }}
 
+" let b:vcm_tab_complete=1
+let g:jellybeans_overrides = {'background': { 'guibg': '121212' }}
 let g:jellybeans_use_term_italics = 1
 let g:airline_extensions = []
 " let g:gruvbox_contrast_dark='hard'
@@ -109,8 +108,6 @@ let $FZF_DEFAULT_OPTS='--reverse'
 " rtp
 let &rtp .= ',' . expand('<sfile>p:h')
 filetype plugin indent on
-
-
 
 " REMAP
 let mapleader = " "
@@ -137,6 +134,20 @@ noremap <leader>p "*p   " prime selection
 noremap <C-Y> "+y   " system clipboard register
 noremap <C-l> "+p   " system clipboard register
 
+" folding
+" nmap <silent> FF :foldclose<CR>
+" nmap <silent> ff :foldopen<CR>
+
+" rigidity
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+inoremap <Up> <Nop>
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+
 " lazy shortcuts
 nnoremap <leader>n :noh<CR>
 nnoremap <leader>o :browse oldfiles<CR>
@@ -147,6 +158,7 @@ nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 35<CR>
 nnoremap <leader>d :NERDTree<CR> :vertical resize 30<CR>
 
 
+" (no)hlsearch by pressing enter
 let g:highlighting = 0
 function! Highlighting()
     if g:highlighting == 1 && @/ =~ '^\\<'.expand('<cword>').'\\>$'
@@ -173,20 +185,13 @@ endif
 
 
 
+
 "" COC.nvim example configuration
 
-"" TextEdit might fail if hidden is not set.
 set hidden
-
-" Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
 set updatetime=300
-
-" Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
@@ -303,7 +308,7 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
-" Add (Neo)Vim's native statusline support.
+" Add (Neo)Vim's native statusline support. FIXME: airline conflict
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
@@ -325,4 +330,4 @@ nnoremap <silent><nowait> <C-J>  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent><nowait> <C-K>  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent><nowait> <C-P>  :<C-u>CocListResume<CR> endif
+nnoremap <silent><nowait> <C-P>  :<C-u>CocListResume<CR>
