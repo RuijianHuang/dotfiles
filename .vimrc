@@ -74,7 +74,7 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}              " HTML/ CSS-like snippet
 Plugin 'git://git.wincent.com/command-t.git'            " fast file navigation for VIM
 
 " Gaming now
-Plugin 'ThePrimeagen/vim-be-good'
+" Plugin 'ThePrimeagen/vim-be-good'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -139,21 +139,24 @@ noremap <C-l> "+p   " system clipboard register
 " nmap <silent> ff :foldopen<CR>
 
 " rigidity
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
-inoremap <Up> <Nop>
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
+" noremap <Up> <Nop>
+" noremap <Down> <Nop>
+" noremap <Left> <Nop>
+" noremap <Right> <Nop>
+" inoremap <Up> <Nop>
+" inoremap <Down> <Nop>
+" inoremap <Left> <Nop>
+" inoremap <Right> <Nop>
 
 " lazy shortcuts
 nnoremap <leader>n :noh<CR>
 nnoremap <leader>o :browse oldfiles<CR>
-nnoremap <leader>f :FZF<CR>
-nnoremap <leader>r :Rg<CR>
-nnoremap <leader>u :UndotreeShow<CR>
+nnoremap <leader>z :FZF<CR>
+nnoremap <leader>fr :Rg<CR>
+nnoremap <leader>fb :Buffer<CR>
+nnoremap <leader>fl :Lines<CR>
+nnoremap <leader>fc :Blines<CR>
+nnoremap <leader>ut :UndotreeShow<CR>
 nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 35<CR>
 nnoremap <leader>d :NERDTree<CR> :vertical resize 30<CR>
 
