@@ -1,3 +1,2 @@
-*** .files
-** Synchronizable Customizations
-* Yay
+# dotfiles
+- .vimrc, .zshrc, etc. 
