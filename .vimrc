@@ -24,48 +24,37 @@ set undofile
 
 set nowrap
 set noerrorbells
-set cursorline
+set nocursorline
 set scrolloff=8
 set cmdheight=1
 set colorcolumn=80
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 filetype off                  " required
-
-
-" LITTLE HELP
-" git repos on your local machine
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()     " alternative: pass a path
 Plugin 'VundleVim/Vundle.vim'
 
 " Autocompletes
-" Plugin 'Valloric/YouCompleteMe'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 " Plugin 'ajh17/VimCompletesMe'
+" Plugin 'Valloric/YouCompleteMe'
 
 " Themes & Colorscheme
 Plugin 'vim-airline/vim-airline'                        " status line & other chunks
 Plugin 'vim-airline/vim-airline-themes'                 " exotic themes
 Plugin 'nanotech/jellybeans.vim'                        " beautiful vim theme
-" Plugin 'Gruvbox-community/gruvbox'                      " gruvbox
-" Plugin 'flazz/vim-colorschemes'                         " one that hasn't been used
+Plugin 'Gruvbox-community/gruvbox'                      " gruvbox
 Plugin 'shmup/vim-sql-syntax'                           " sql syntax highlight
+" Plugin 'flazz/vim-colorschemes'                         " one that hasn't been used
 
-" Utilitarian
-" Pass the path to set the runtimepath properly.
+" Utilitarian " Pass the path to set the runtimepath properly.
 Plugin 'scrooloose/nerdcommenter'                       " 
 Plugin 'scrooloose/nerdtree'                            " a tree explorer
 Plugin 'mbbill/undotree'
 Plugin 'rking/ag.vim'                                   " text search
 Plugin 'junegunn/fzf', {'do': { -> fzf#install()}}      " better file search
 Plugin 'junegunn/fzf.vim'
-" Plugin 'kien/ctrlp.vim'                                 " file search
 
 " TODO: understand the following
 Plugin 'tpope/vim-surround'                             " surrounding toy
@@ -75,21 +64,20 @@ Plugin 'git://git.wincent.com/command-t.git'            " fast file navigation f
 
 " Gaming now
 " Plugin 'ThePrimeagen/vim-be-good'
-
 call vundle#end()            " required
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
 
+" colorscheme
+" colorscheme gruvbox
+" let g:gruvbox_contrast_dark='hard'
+" let g:gruvbox_invert_selection=0
 colorscheme jellybeans
+let g:jellybeans_overrides = {'background': { 'guibg': '131212' }}
+let g:jellybeans_use_term_italics=1
 set background=dark
 
-" let b:vcm_tab_complete=1
-let g:jellybeans_overrides = {'background': { 'guibg': '121212' }}
-let g:jellybeans_use_term_italics = 1
 let g:airline_extensions = []
-" let g:gruvbox_contrast_dark='hard'
-" let g:gruvbox_invert_selection='0'
+" let b:vcm_tab_complete=1
 
 " Nerd Commenter Settings
 let g:NERDSpaceDelims = 1
@@ -98,7 +86,7 @@ let g:NERDCustomDelimiters = { 'c': { 'left': '//','right': '' } }
 let g:NERDTrimTrailingWhitespace = 1
 
 " FZF
-let g:fzf_layout = {'window': {'width':0.7, 'height':0.8}}
+let g:fzf_layout = {'window': {'width':0.8, 'height':0.8}}
 let $FZF_DEFAULT_OPTS='--reverse'
 
 " ycm
@@ -148,7 +136,8 @@ noremap <C-l> "+p   " system clipboard register
 " inoremap <Left> <Nop>
 " inoremap <Right> <Nop>
 
-" lazy shortcuts
+" lazyness
+nnoremap <leader>so :source ~/.vimrc<CR>
 nnoremap <leader>n :noh<CR>
 nnoremap <leader>o :browse oldfiles<CR>
 nnoremap <leader>z :FZF<CR>
@@ -172,7 +161,6 @@ function! Highlighting()
     let g:highlighting = 1
     return ":silent set hlsearch\<CR>"
 endfunction
-
 nnoremap <silent> <expr> <CR> Highlighting()
 
 " Highlight TODO, FIXME, NOTE, etc.
@@ -188,9 +176,7 @@ endif
 
 
 
-
 "" COC.nvim example configuration
-
 set hidden
 set nobackup
 set nowritebackup
