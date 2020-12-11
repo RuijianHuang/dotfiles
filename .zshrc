@@ -94,14 +94,25 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-#
+function gcop() {
+    git log --color=always --format="%C(cyan)%h %C(blue)%ar%C(auto)%d \
+                                               %C(yellow)%s%+b %C(black)%ae" "$@" | 
+    fzf -i -e +s --reverse --tiebreak=index --no-multi --ansi \
+        --preview="echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always %'" \
+        --header "enter: view, C-c: copy hash" \
+        --bind "enter:execute:$_viewGitLogLine | less -R" \
+        --bind "ctrl-c:execute:$_gitLogLineToHash | xclip -r -selection clipboard"
+}
+
+
+alias gcop='gcop'
 alias p='python3'
 alias b='acpi'
+alias c='clear'
+alias cf='cd $(find -L ~/desktop/ -type d | fzf -i) && l'
 alias B='acpi -V'
 alias o='xdg-open'
+alias wslo='explorer.exe'
 alias k='kstart5'
 alias h='htop'
 alias v='vim'
