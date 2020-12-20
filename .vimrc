@@ -1,83 +1,148 @@
-set nocompatible              " be iMproved, required
+set nocompatible              " use Vim defaults instead of Vi defaults
 
-syntax on
+" appearances
+syntax enable
 set number
 set relativenumber
-set laststatus=2
+set nowrap
+set nocursorline
+set ruler
+set showtabline=2             " always show buffer tabs
+set noshowmode                " no --INSERT-- down below
+set cmdheight=1
+set laststatus=0
+set termguicolors
+set background=dark
+set colorcolumn=80
+highlight ColorColumn ctermbg=0 guibg=lightgrey
 
-set expandtab
-set ts=4 sw=4
+" whitespaces
+set tabstop=4
 set shiftwidth=4
+set smarttab
+set expandtab
 set smartindent
 set autoindent
-" set foldmethod=syntax
-set foldcolumn=0
 
+" searching
 set showmatch
 set incsearch
 set hlsearch
 set ignorecase
 set smartcase
 
-set undodir=~/.vim/undodir
-set undofile
-
-set nowrap
+" preferences
+set mouse=a
 set noerrorbells
-set nocursorline
-set scrolloff=8
-set cmdheight=1
-set colorcolumn=80
-highlight ColorColumn ctermbg=0 guibg=lightgrey
+set shortmess+=c
+set undodir=~/.vim/undodir      " cross section undo
+set undofile
+set scrolloff=8                 " min #lines above/below current screen"
+set foldcolumn=0
+" set foldmethod=syntax
+" set clipboard=unnamedplus       " copy/paste with everything else
 
-filetype off                  " required
-set rtp+=~/.vim/bundle/Vundle.vim
+" nerd
+set hidden
+set nobackup                    " recommended by coc
+set nowritebackup               " recommended by coc
+set splitbelow
+set splitright
+set iskeyword+=-                " treat dash-word as a word object
+set t_Co=256
+set encoding=utf-8
+set updatetime=300
+filetype off                    " native-vim filetype detection; need to be off for vundle
+
+
+
+
+" here goes plugins
+let $MYVIMRC='$HOME/.vimrc'     " TODO: change vimdir, .vimrc path?
+
+set rtp+=$HOME/.vim/bundle/Vundle.vim
 call vundle#begin()     " alternative: pass a path
 Plugin 'VundleVim/Vundle.vim'
 
 " Autocompletes
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 " Plugin 'ajh17/VimCompletesMe'
-" Plugin 'Valloric/YouCompleteMe'
 
-" Themes & Colorscheme
+" Colorscheme & syntax
+Plugin 'nanotech/jellybeans.vim'                        " beautiful vim theme
+Plugin 'joshdick/onedark.vim'
 Plugin 'vim-airline/vim-airline'                        " status line & other chunks
 Plugin 'vim-airline/vim-airline-themes'                 " exotic themes
-Plugin 'nanotech/jellybeans.vim'                        " beautiful vim theme
-Plugin 'Gruvbox-community/gruvbox'                      " gruvbox
 Plugin 'shmup/vim-sql-syntax'                           " sql syntax highlight
-" Plugin 'flazz/vim-colorschemes'                         " one that hasn't been used
+Plugin 'sheerun/vim-polyglot'                           " syntax highlight for py?
+" Plugin 'flazz/vim-colorschemes'                         " collection of colorschemes
+" Plugin 'Gruvbox-community/gruvbox'                      " gruvbox
 
-" Utilitarian " Pass the path to set the runtimepath properly.
-Plugin 'scrooloose/nerdcommenter'                       " 
+" Utilitarian
+Plugin 'scrooloose/nerdcommenter'                       " comment with style
 Plugin 'scrooloose/nerdtree'                            " a tree explorer
 Plugin 'mbbill/undotree'
 Plugin 'rking/ag.vim'                                   " text search
-Plugin 'junegunn/fzf', {'do': { -> fzf#install()}}      " better file search
-Plugin 'junegunn/fzf.vim'
+Plugin 'junegunn/fzf', {'do': { -> fzf#install()}}      " fuzzy find
+Plugin 'junegunn/fzf.vim'                               " fuzzy find
+Plugin 'jiangmiao/auto-pairs'                           " close ()[]{} for me
+" Plugin 'ThePrimeagen/vim-be-good'
 
-" TODO: understand the following
-Plugin 'tpope/vim-surround'                             " surrounding toy
+" new puppies
+Plugin 'voldikss/vim-floaterm'
+Plugin 'tpope/vim-surround'                             " change surrounds e.g.: ysiw[  ds'  cs[(
 Plugin 'tpope/vim-fugitive'                             " vim git cmd
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}              " HTML/ CSS-like snippet tool?
 Plugin 'git://git.wincent.com/command-t.git'            " fast file navigation for VIM
 
-" Gaming now
-" Plugin 'ThePrimeagen/vim-be-good'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" colorscheme
-" colorscheme gruvbox
+
+" colorscheme settings
+colorscheme onedark
+
+" checks if terminal has 24-bit color support
+if (has("termguicolors"))
+    set termguicolors
+    hi LineNr ctermbg=NONE guibg=NONE
+endif
+
+" autocmd vimenter * hi Comment cterm=italic term=italic    " FIXME: not italic on startup
+let g:onedark_hide_endofbuffer=1
+let g:onedark_terminal_italics=1
+let g:onedark_termcolors=256
+
+" onedark.vim override: Don't set a background color when running in a terminal;
+if (has("autocmd") && !has("gui_running"))
+  augroup colorset
+    autocmd!
+    let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+    autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
+    autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
+  augroup END
+endif
+
 " let g:gruvbox_contrast_dark='hard'
 " let g:gruvbox_invert_selection=0
-colorscheme jellybeans
-let g:jellybeans_overrides = {'background': { 'guibg': '131212' }}
-let g:jellybeans_use_term_italics=1
-set background=dark
 
-let g:airline_extensions = []
-" let b:vcm_tab_complete=1
+" let g:jellybeans_overrides = {'background': { 'guibg': '121212' }}
+" let g:jellybeans_use_term_italics=1
+
+" airline
+" let g:airline_extensions = []
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 2
+let g:airline#extensions#tabline#show_tabs = 2
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
+let g:airline_powerline_fonts = 0
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_theme = 'minimalist'
 
 " Nerd Commenter Settings
 let g:NERDSpaceDelims = 1
@@ -85,26 +150,66 @@ let g:NERDDefaultAlign = 'left'
 let g:NERDCustomDelimiters = { 'c': { 'left': '//','right': '' } }
 let g:NERDTrimTrailingWhitespace = 1
 
+
 " FZF
 let g:fzf_layout = {'window': {'width':0.8, 'height':0.8}}
 let $FZF_DEFAULT_OPTS='--reverse'
 
-" ycm
-" let g:ycm_keep_logfiles = 1
-" let g:ycm_log_level = 'debug'
 
 " rtp
 let &rtp .= ',' . expand('<sfile>p:h')
 filetype plugin indent on
 
+
+" Explorer
+let g:coc_explorer_global_presets = {
+\   '.vim': {
+\     'root-uri': '~/.vim',
+\   },
+\   'tab': {
+\     'position': 'tab',
+\     'quit-on-open': v:true,
+\   },
+\   'simplify': {
+\     'file-child-template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
+\   }
+\ }
+
+autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 " REMAP
-let mapleader = " "
+let mapleader = "\<Space>"
 
 " split sizing
 nnoremap <leader>= :vertical resize +5<CR>
 nnoremap <leader>- :vertical resize -5<CR>
 nnoremap <leader>+ :resize +5<CR>
 nnoremap <leader>_ :resize -5<CR>
+nnoremap <C-j> :resize -5<CR>                   " more resizing
+nnoremap <C-k> :resize +5<CR>
+nnoremap <C-h> :vertical resize -5<CR>
+nnoremap <C-l> :vertical resize +5<CR>
+nnoremap <C-Down> :resize -5<CR>
+nnoremap <C-Up> :resize +5<CR>
+nnoremap <C-Left> :vertical resize -5<CR>
+nnoremap <C-Right> :vertical resize +5<CR>
 
 " split navigation
 nnoremap <leader>h :wincmd h<CR>
@@ -116,11 +221,14 @@ nnoremap <leader><Down> :wincmd j<CR>
 nnoremap <leader><Up> :wincmd k<CR>
 nnoremap <leader><Right> :wincmd l<CR>
 
+" tabs navigation
+nnoremap <C-n> :bn<CR>
+
 " copy paste
 noremap <leader>y "*y   " prime selection 
 noremap <leader>p "*p   " prime selection
-noremap <C-Y> "+y   " system clipboard register
-noremap <C-l> "+p   " system clipboard register
+noremap <C-Y> "+y       " system clipboard register
+noremap <C-l> "+p       " system clipboard register
 
 " folding
 " nmap <silent> FF :foldclose<CR>
@@ -138,16 +246,18 @@ noremap <C-l> "+p   " system clipboard register
 
 " lazyness
 nnoremap <leader>so :source ~/.vimrc<CR>
-nnoremap <leader>n :noh<CR>
-nnoremap <leader>o :browse oldfiles<CR>
-nnoremap <leader>z :FZF<CR>
+nnoremap <leader>n  :noh<CR>
+nnoremap <leader>o  :browse oldfiles<CR>
+nnoremap <leader>z  :FZF<CR>
 nnoremap <leader>fr :Rg<CR>
 nnoremap <leader>fb :Buffer<CR>
 nnoremap <leader>fl :Lines<CR>
 nnoremap <leader>fc :Blines<CR>
+nnoremap <leader>tn :FloatermNew<CR>
 nnoremap <leader>ut :UndotreeShow<CR>
 nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 35<CR>
-nnoremap <leader>d :NERDTree<CR> :vertical resize 30<CR>
+nnoremap <leader>d  :NERDTree<CR> :vertical resize 30<CR>
+nnoremap <leader>e  :CocCommand explorer<CR>
 
 
 " (no)hlsearch by pressing enter
@@ -161,7 +271,7 @@ function! Highlighting()
     let g:highlighting = 1
     return ":silent set hlsearch\<CR>"
 endfunction
-nnoremap <silent> <expr> <CR> Highlighting()
+" nnoremap <silent> <expr> <CR> Highlighting()
 
 " Highlight TODO, FIXME, NOTE, etc.
 if has('autocmd') && v:version > 701
@@ -176,12 +286,7 @@ endif
 
 
 
-"" COC.nvim example configuration
-set hidden
-set nobackup
-set nowritebackup
-set updatetime=300
-set shortmess+=c
+" COC.nvim example configuration
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
