@@ -105,19 +105,37 @@ function gcop() {
 }
 
 
+# git shortcut
 alias gcop='gcop'
+alias gs='git status'
+alias gl='git log --oneline --decorate --graph'
+alias gla='git log --oneline --decorate --all --graph'
+alias ga='git add'
+alias gm='git commit'
+alias lg='lazygit'
+
 alias p='python3'
 alias b='acpi'
 alias c='clear'
-alias cf='cd $(find -L ~/desktop/ -type d | fzf -i) && l'
+alias cf='cd $(find -L ./ -type d | fzf -i)'
+alias cfh='cd $(find -L ~/Desktop/ -type d | fzf -i)'
 alias B='acpi -V'
 alias o='xdg-open'
 alias wslo='explorer.exe'
 alias k='kstart5'
 alias h='htop'
-alias v='vim'
 alias bat='batcat'
-alias update='sudo apt update && sudo apt upgrade -y'
+alias hf='history | fzf'
+
+alias s='source'
+alias sz='source ~/.zshrc'
+
+alias v='vim'
+alias vd='vim -d'
+alias nv='nvim'
+alias nvd='nvim -d'
+
+alias update='sudo apt update && sudo apt upgrade'
 alias updated='sudo apt dist-upgrade'
 alias cleaning='sudo apt autoremove && sudo apt autoclean && sudo apt clean'
 alias digip='dig +short myip.opendns.com @resolver1.opendns.com'
