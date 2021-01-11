@@ -5,7 +5,7 @@ syntax enable
 set number
 set relativenumber
 set nowrap
-set nocursorline
+set cursorline
 set ruler
 set showtabline=2             " always show buffer tabs
 set noshowmode                " no --INSERT-- down below
@@ -86,6 +86,8 @@ Plugin 'rking/ag.vim'                                   " text search
 Plugin 'junegunn/fzf', {'do': { -> fzf#install()}}      " fuzzy find
 Plugin 'junegunn/fzf.vim'                               " fuzzy find
 Plugin 'jiangmiao/auto-pairs'                           " close ()[]{} for me
+Plugin 'easymotion/vim-easymotion'                      " goto any word
+Plugin 'yuttie/comfortable-motion.vim'                  " scrolling feels
 " Plugin 'ThePrimeagen/vim-be-good'
 
 " new puppies
@@ -95,12 +97,19 @@ Plugin 'tpope/vim-fugitive'                             " vim git cmd
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}              " HTML/ CSS-like snippet tool?
 Plugin 'git://git.wincent.com/command-t.git'            " fast file navigation for VIM
 
+" new js, react helpers
+" Plugin 'styled-components/vim-styled-components', {'branch': 'main'}
+" Plugin 'jparise/vim-graphql'
+" Plugin 'pangloss/vim-javascript'
+" Plugin 'leafgarland/typescript-vim'
+
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 
 " colorscheme settings
-colorscheme onedark
+colorscheme jellybeans
 
 " checks if terminal has 24-bit color support
 if (has("termguicolors"))
@@ -113,7 +122,7 @@ let g:onedark_hide_endofbuffer=1
 let g:onedark_terminal_italics=1
 let g:onedark_termcolors=256
 
-" onedark.vim override: Don't set a background color when running in a terminal;
+" override: Don't set a background color when running in a terminal;
 if (has("autocmd") && !has("gui_running"))
   augroup colorset
     autocmd!
@@ -126,15 +135,15 @@ endif
 " let g:gruvbox_contrast_dark='hard'
 " let g:gruvbox_invert_selection=0
 
-" let g:jellybeans_overrides = {'background': { 'guibg': '121212' }}
-" let g:jellybeans_use_term_italics=1
+let g:jellybeans_overrides = {'background': { 'guibg': '121212' }}
+let g:jellybeans_use_term_italics=1
 
 " airline
 " let g:airline_extensions = []
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 2
 let g:airline#extensions#tabline#show_tabs = 2
-let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#right_sep = ''
@@ -160,8 +169,7 @@ let $FZF_DEFAULT_OPTS='--reverse'
 let &rtp .= ',' . expand('<sfile>p:h')
 filetype plugin indent on
 
-
-" Explorer
+" coc-explorer
 let g:coc_explorer_global_presets = {
 \   '.vim': {
 \     'root-uri': '~/.vim',
@@ -177,6 +185,14 @@ let g:coc_explorer_global_presets = {
 
 autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
 
+" coc with node
+if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+  let g:coc_global_extensions += ['coc-prettier']
+endif
+
+if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+  let g:coc_global_extensions += ['coc-eslint']
+endif
 
 
 
@@ -206,10 +222,11 @@ nnoremap <C-j> :resize -5<CR>                   " more resizing
 nnoremap <C-k> :resize +5<CR>
 nnoremap <C-h> :vertical resize -5<CR>
 nnoremap <C-l> :vertical resize +5<CR>
-nnoremap <C-Down> :resize -5<CR>
-nnoremap <C-Up> :resize +5<CR>
-nnoremap <C-Left> :vertical resize -5<CR>
-nnoremap <C-Right> :vertical resize +5<CR>
+nnoremap <C-Down> :resize -3<CR>
+nnoremap <C-Up> :resize +3<CR>
+nnoremap <C-Left> :vertical resize -3<CR>
+nnoremap <C-Right> :vertical resize +3<CR>
+
 
 " split navigation
 nnoremap <leader>h :wincmd h<CR>
@@ -220,6 +237,11 @@ nnoremap <leader><Left> :wincmd h<CR>
 nnoremap <leader><Down> :wincmd j<CR>
 nnoremap <leader><Up> :wincmd k<CR>
 nnoremap <leader><Right> :wincmd l<CR>
+
+" split rotation
+nnoremap <leader>rv <C-w>t<C-w>K
+nnoremap <leader>rh <C-w>t<C-w>H
+
 
 " tabs navigation
 nnoremap <C-n> :bn<CR>
@@ -247,6 +269,7 @@ noremap <C-l> "+p       " system clipboard register
 " lazyness
 nnoremap <leader>so :source ~/.vimrc<CR>
 nnoremap <leader>n  :noh<CR>
+nnoremap <leader>u  :set relativenumber!<CR>
 nnoremap <leader>o  :browse oldfiles<CR>
 nnoremap <leader>z  :FZF<CR>
 nnoremap <leader>fr :Rg<CR>
@@ -255,7 +278,6 @@ nnoremap <leader>fl :Lines<CR>
 nnoremap <leader>fc :Blines<CR>
 nnoremap <leader>tn :FloatermNew<CR>
 nnoremap <leader>ut :UndotreeShow<CR>
-nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 35<CR>
 nnoremap <leader>d  :NERDTree<CR> :vertical resize 30<CR>
 nnoremap <leader>e  :CocCommand explorer<CR>
 
