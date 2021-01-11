@@ -106,36 +106,50 @@ function gcop() {
 
 
 # git shortcut
-alias gcop='gcop'
+alias lg='lazygit'
 alias gs='git status'
 alias gl='git log --oneline --decorate --graph'
 alias gla='git log --oneline --decorate --all --graph'
+alias gd='git diff'
+alias gdt='git difftool'
 alias ga='git add'
 alias gm='git commit'
-alias lg='lazygit'
+alias gpl='git pull'
+alias gps='git push'
+alias gcop='gcop'
 
-alias p='python3'
-alias b='acpi'
-alias c='clear'
-alias cf='cd $(find -L ./ -type d | fzf -i)'
-alias cfh='cd $(find -L ~/Desktop/ -type d | fzf -i)'
-alias B='acpi -V'
-alias o='xdg-open'
-alias wslo='explorer.exe'
-alias k='kstart5'
-alias h='htop'
-alias bat='batcat'
-alias hf='history | fzf'
-
-alias s='source'
-alias sz='source ~/.zshrc'
-
+# cd & vim
+alias cf='cd $(find -L ./ type d -print 2>&1 | grep -v "Permission denied" | fzf -i)'
+alias cfh='cd $(find -L ~/Desktop type d -print 2>&1 | grep -v "Permission denied" | fzf -i)'
 alias v='vim'
 alias vd='vim -d'
 alias nv='nvim'
 alias nvd='nvim -d'
 
+# open/execute files/apps
+alias o='xdg-open'
+alias wslo='explorer.exe'
+alias k='kstart5'
+
+# update, clean, install, remove for ubuntu
 alias update='sudo apt update && sudo apt upgrade'
 alias updated='sudo apt dist-upgrade'
 alias cleaning='sudo apt autoremove && sudo apt autoclean && sudo apt clean'
+alias sinstall='sudo apt install'
+alias sremove='sudo apt remove'
+
+# sys info
+alias b='acpi'
+alias B='acpi -V'
 alias digip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias h='htop'
+
+# miscellaneous
+alias p='python3'
+alias coverage='/home/richie/.local/bin/coverage'
+alias c='clear'
+alias bat='batcat'
+alias hf='history | fzf'
+alias s='source'
+alias sz='source ~/.zshrc'
+
