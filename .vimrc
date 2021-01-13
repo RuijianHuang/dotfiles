@@ -86,16 +86,17 @@ Plugin 'rking/ag.vim'                                   " text search
 Plugin 'junegunn/fzf', {'do': { -> fzf#install()}}      " fuzzy find
 Plugin 'junegunn/fzf.vim'                               " fuzzy find
 Plugin 'jiangmiao/auto-pairs'                           " close ()[]{} for me
-Plugin 'easymotion/vim-easymotion'                      " goto any word
-Plugin 'yuttie/comfortable-motion.vim'                  " scrolling feels
+" Plugin 'yuttie/comfortable-motion.vim'                  " scrolling feels
 " Plugin 'ThePrimeagen/vim-be-good'
 
 " new puppies
+Plugin 'iamcco/markdown-preview.nvim'                    " preview in browser
 Plugin 'voldikss/vim-floaterm'
 Plugin 'tpope/vim-surround'                             " change surrounds e.g.: ysiw[  ds'  cs[(
 Plugin 'tpope/vim-fugitive'                             " vim git cmd
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}              " HTML/ CSS-like snippet tool?
 Plugin 'git://git.wincent.com/command-t.git'            " fast file navigation for VIM
+Plugin 'wesQ3/vim-windowswap'                           " swap split panes by marking then swapping
 
 " new js, react helpers
 " Plugin 'styled-components/vim-styled-components', {'branch': 'main'}
@@ -109,7 +110,7 @@ filetype plugin indent on    " required
 
 
 " colorscheme settings
-colorscheme jellybeans
+colorscheme onedark
 
 " checks if terminal has 24-bit color support
 if (has("termguicolors"))
@@ -163,6 +164,11 @@ let g:NERDTrimTrailingWhitespace = 1
 " FZF
 let g:fzf_layout = {'window': {'width':0.8, 'height':0.8}}
 let $FZF_DEFAULT_OPTS='--reverse'
+
+" windowsawp
+nnoremap <silent> <leader>yw :call WindowSwap#MarkWindowSwap()<CR>
+nnoremap <silent> <leader>pw :call WindowSwap#DoWindowSwap()<CR>
+nnoremap <silent> <leader>ww :call WindowSwap#EasyWindowSwap()<CR>
 
 
 " rtp
