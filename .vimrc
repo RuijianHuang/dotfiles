@@ -18,7 +18,7 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " whitespaces
 set tabstop=4
-set shiftwidth=4
+set shiftwidth=2
 set smarttab
 set expandtab
 set smartindent
@@ -263,21 +263,24 @@ noremap <C-l> "+p       " system clipboard register
 " nmap <silent> ff :foldopen<CR>
 
 " rigidity
-" noremap <Up> <Nop>
-" noremap <Down> <Nop>
-" noremap <Left> <Nop>
-" noremap <Right> <Nop>
-" inoremap <Up> <Nop>
-" inoremap <Down> <Nop>
-" inoremap <Left> <Nop>
-" inoremap <Right> <Nop>
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+inoremap <Up> <Nop>
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
 
 " lazyness
 nnoremap <leader>so :source ~/.vimrc<CR>
 nnoremap <leader>n  :noh<CR>
 nnoremap <leader>u  :set relativenumber!<CR>
+nnoremap <leader>r  :set wrap!<CR>
+nnoremap <leader>sp :set spell!<CR>
 nnoremap <leader>o  :browse oldfiles<CR>
 nnoremap <leader>z  :FZF<CR>
+nnoremap <leader>ff :Files<CR>
 nnoremap <leader>fr :Rg<CR>
 nnoremap <leader>fb :Buffer<CR>
 nnoremap <leader>fl :Lines<CR>
