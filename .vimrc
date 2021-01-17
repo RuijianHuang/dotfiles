@@ -18,7 +18,7 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " whitespaces
 set tabstop=4
-set shiftwidth=2
+set shiftwidth=4
 set smarttab
 set expandtab
 set smartindent
@@ -110,7 +110,7 @@ filetype plugin indent on    " required
 
 
 " colorscheme settings
-colorscheme onedark
+colorscheme jellybeans
 
 " checks if terminal has 24-bit color support
 if (has("termguicolors"))
@@ -128,8 +128,8 @@ if (has("autocmd") && !has("gui_running"))
   augroup colorset
     autocmd!
     let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
-    autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
-    autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
+    " autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
+    " autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
   augroup END
 endif
 
@@ -192,13 +192,13 @@ let g:coc_explorer_global_presets = {
 autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
 
 " coc with node
-if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
-  let g:coc_global_extensions += ['coc-prettier']
-endif
+" if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+"   let g:coc_global_extensions += ['coc-prettier']
+" endif
 
-if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
-  let g:coc_global_extensions += ['coc-eslint']
-endif
+" if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+"   let g:coc_global_extensions += ['coc-eslint']
+" endif
 
 
 
@@ -276,8 +276,6 @@ inoremap <Right> <Nop>
 nnoremap <leader>so :source ~/.vimrc<CR>
 nnoremap <leader>n  :noh<CR>
 nnoremap <leader>u  :set relativenumber!<CR>
-nnoremap <leader>r  :set wrap!<CR>
-nnoremap <leader>sp :set spell!<CR>
 nnoremap <leader>o  :browse oldfiles<CR>
 nnoremap <leader>z  :FZF<CR>
 nnoremap <leader>ff :Files<CR>
@@ -289,6 +287,9 @@ nnoremap <leader>tn :FloatermNew<CR>
 nnoremap <leader>ut :UndotreeShow<CR>
 nnoremap <leader>d  :NERDTree<CR> :vertical resize 30<CR>
 nnoremap <leader>e  :CocCommand explorer<CR>
+nnoremap <leader>co 1z=
+nnoremap <leader>sp :set spell!<CR>
+nnoremap <leader>wr :set wrap!<CR>
 
 
 " (no)hlsearch by pressing enter
