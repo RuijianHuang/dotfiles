@@ -17,11 +17,12 @@
   page_down = Page_Down
   page_up_half = <Primary>Page_Up
   page_down_half = <Primary>Page_Down
+  toggle_zoom = <Alt>f
 [profiles]
   [[default]]
     icon_bell = False
     background_color = "#141414"
-    background_darkness = 0.97
+    background_darkness = 0.95
     background_type = transparent
     cursor_color = "#e9b96e"
     font = Hack Nerd Font 11
@@ -32,10 +33,21 @@
     use_system_font = False
 [layouts]
   [[default]]
-    [[[window0]]]
+    [[[child0]]]
       type = Window
       parent = ""
-    [[[child1]]]
+      order = 0
+      position = 749:257
+      maximised = False
+      fullscreen = False
+      size = 1108, 888
+      title = richie@Richie:~
+      last_active_term = fe0b56fc-5550-43d8-9478-e623816c0ef5
+      last_active_window = True
+    [[[terminal1]]]
       type = Terminal
-      parent = window0
+      parent = child0
+      order = 0
+      profile = default
+      uuid = fe0b56fc-5550-43d8-9478-e623816c0ef5
 [plugins]
