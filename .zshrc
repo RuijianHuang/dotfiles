@@ -120,10 +120,11 @@ alias gpl='git pull'
 alias gps='git push'
 alias gcop='gcop'
 
-# ls & cd & vim
+# ls & cd & vim & tree
 alias l='ls -alh --group-directories-first -sS'
 alias cf='cd $(find -L ./ -type d -print 2>&1 | grep -v "Permission denied" | fzf -i)'
 alias cfh='cd $(find -L ~/Desktop -type d -print 2>&1 | grep -v "Permission denied" | fzf -i)'
+alias t='tree'
 alias v='vim'
 alias vd='vim -d'
 alias nv='nvim'
@@ -149,6 +150,8 @@ alias h='htop'
 
 # miscellaneous
 alias p='python3'
+alias jl='jupyter lab'
+alias jn='jupyter notebook'
 alias coverage='/home/richie/.local/bin/coverage'
 alias c='clear'
 alias bat='batcat'
